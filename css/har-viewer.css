@@ -1,0 +1,140 @@
+.method {
+    text-transform: uppercase
+}
+
+.uri {
+    width: 20em;
+    margin-right: 2em;
+    white-space: nowrap;
+    display: inline-block;
+    overflow: hidden;
+}
+
+div.details {
+    display: none;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+p.title {
+    border-bottom: 2px solid #a9a9a9;
+}
+
+span.uri:hover {
+    overflow: visible;
+    /*width: auto;*/
+    z-index: 444;
+    background: white;
+    font-weight: bold;
+}
+
+.bodySize {
+    width: 3em;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.timelineBar {
+    width: 100%;
+}
+.timelineBlocked {
+    background-color: #DECCB2;
+}
+
+.timelineDns {
+    background-color: #63B3C0;
+}
+
+.timelineSsl {
+    background-color: #98B89B;
+}
+
+.timelineConnect {
+    background-color: #A7D83E;
+}
+
+.timelineSend {
+    background-color: #D89A89;
+}
+
+.timelineWait {
+    background-color: #9082B2;
+}
+
+.timelineReceive {
+    background-color: #B4B4B4;
+}
+
+span.timelineSlice {
+    margin: 0;
+    height: 1em;
+    display: inline-block;
+}
+
+span.plus {
+    background-image: url(twisty-sprites.png);
+    background-repeat: no-repeat;
+    background-position: 3px 3px;
+    cursor: pointer;
+}
+
+span.minus {
+    background-image: url(twisty-sprites.png);
+    background-repeat: no-repeat;
+    background-position: 3px -16px;
+    cursor: pointer;
+}
+
+.hv-header {
+    margin: 0;
+    font-weight: bold;
+    color: #565656;
+}
+
+.hv-body {
+    margin: 2px 0;
+}
+
+span.time {
+    width: 3em;
+    text-align: right;
+    float: right;
+}
+.ui-widget {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.ui-tabs .ui-tabs-nav {
+    padding: 0;
+}
+
+.ui-widget-header {
+    background: none;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    margin: 0;
+}
+
+.ui-widget-header {
+    border: none;
+    border-bottom: 1px solid #AAA;
+}
+
+/*.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {*/
+    /*border: none;*/
+/*}*/
+/**/
+.ui-tabs .ui-tabs-nav li a{
+    padding: 2px;
+}
+/**/
+.ui-tabs .ui-tabs-panel {
+    padding-left: 4px;
+}
+/**/
+/*.ui-tabs-panel {*/
+/*}*/
