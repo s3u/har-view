@@ -4,18 +4,26 @@
     <script type='text/javascript' src='../scripts/jquery.min.js'></script>
     <script type='text/javascript' src='../scripts/jquery-ui.min.js'></script>
     <script type='text/javascript' src='../scripts/har-viewer.js'></script>
+    <script type='text/javascript' src='http://view.jqueryui.com/master/ui/jquery.ui.tooltip.js'></script>
     <link rel='stylesheet' href='../css/jquery-ui.css'/>
     <link rel='stylesheet' href='../css/har-viewer.css'/>
 
     <script type='text/javascript'>
         $(document).ready(function () {
-            var max = 4;
+            var max = 5;
             $('#har').HarView();
             var har = $('#har').data('HarView');
             for(var i = 0; i < max; i++) {
+                // Note: startedDateTime is part of entry - not request
+                var t = (new Date(Date.now() + Math.floor(Math.random()*100))).toISOString();
+                console.log(i + ': ' + t);
+                har.entry(i, {
+                    pageRef: 'Hello World',
+                    startedDateTime: t
+                });
                 har.request(i, {
                     method: 'GET',
-                    url: 'http://url' + i,
+                    url: 'http://urldasdash jhd ajgas jdga dahsgd hdgash dgashdg hdg hdgh dhasgdf ahsdf aghsd ghasd' + i,
                     headers: [
                         {name: 'Connection', value: 'keep-alive'}
                     ]
@@ -23,14 +31,19 @@
 
             }
             for(i = 0; i < max; i++) {
-                har.timings(i, {
-                    "blocked": i * 10,
+                var blocked = Math.floor(Math.random()*100);
+                var timings = {
+                    "blocked": blocked,
                     "dns": 0,
                     "connect": 15,
                     "send": 20 + i,
-                    "wait": 38 + 2 * i,
-                    "receive": 12 + 3 * i
-                })
+                    "wait": 38 + 10 * i,
+                    "receive": 14 + 3 * i,
+                    "waiting": blocked + (10 * i)
+                };
+                console.log(i + ': ');
+                console.log(timings);
+                har.timings(i, timings);
             }
 
             for(i = 0; i < max; i++) {
@@ -65,6 +78,8 @@
 <div id='har'>
 
 </div>
+
+<span id='left'>left</span>&nbsp;<span id='right'>right</span>\
 
 </body>
 </html>

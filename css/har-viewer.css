@@ -3,7 +3,7 @@
 }
 
 .uri {
-    width: 20em;
+    width: 30em;
     margin-right: 2em;
     white-space: nowrap;
     display: inline-block;
@@ -22,55 +22,68 @@ p.title {
     border-bottom: 2px solid #a9a9a9;
 }
 
-span.uri:hover {
-    overflow: visible;
-    /*width: auto;*/
-    z-index: 444;
-    background: white;
-    font-weight: bold;
-}
-
 .bodySize {
     width: 3em;
     white-space: nowrap;
     display: inline-block;
 }
 
-.timelineBar {
-    width: 100%;
+/*.timelineBar {*/
+    /*width: 300px;*/
+    /*margin: 0;*/
+    /*height: 1em;*/
+    /*display: inline-block;*/
+/*}*/
+
+div.request {
+    border-bottom: 1px solid #efefef;
+    font-family: Lucida Grande, Tahoma, sans-serif;
+    font-size: 10pt;
+}
+.timelineWaiting {
+    background-color: #f3f3f3;
+    border: 1px solid #e3e3e3;
 }
 .timelineBlocked {
     background-color: #DECCB2;
+    border: 1px solid #cEbCa2;
 }
 
 .timelineDns {
     background-color: #63B3C0;
+    border: 1px solid #53A3B0;
 }
 
 .timelineSsl {
     background-color: #98B89B;
+    border: 1px solid #88A88B;
 }
 
 .timelineConnect {
     background-color: #A7D83E;
+    border: 1px solid #97C82E;
 }
 
 .timelineSend {
     background-color: #D89A89;
+    border: 1px solid #C88A79;
 }
 
 .timelineWait {
     background-color: #9082B2;
+    border: 1px solid #8072A2;
 }
 
 .timelineReceive {
     background-color: #B4B4B4;
+    border: 1px solid #A4A4A4;
 }
 
 span.timelineSlice {
     margin: 0;
-    height: 1em;
+    height: 11pt;
     display: inline-block;
+    /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);*/
 }
 
 span.plus {
@@ -138,3 +151,10 @@ span.time {
 /**/
 /*.ui-tabs-panel {*/
 /*}*/
+
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+    -moz-border-radius: 0px/*{cornerRadius}*/;
+    -webkit-border-radius: 0px/*{cornerRadius}*/;
+    -khtml-border-radius: 0px/*{cornerRadius}*/;
+    border-radius: 0px/*{cornerRadius}*/;
+}
