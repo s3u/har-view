@@ -7,62 +7,6 @@
     <link rel='stylesheet' href='../css/jquery-ui.css'/>
     <link rel='stylesheet' href='../css/har-viewer.css'/>
 
-    <script type='text/tmpl' id='har-req-template'>
-        <div id='{{id}}-req' class='request'>
-            <span class='plus' id='{{id}}'>&nbsp;&nbsp;&nbsp;</span>
-            <span class='method' id='{{id}}-method'>{{request.method}}</span>
-            <span class='url' id='{{id}}-url' title='{{request.url}}'>{{request.url}}</span>
-            <span class='status' id='{{id}}-status'>{{response.status}}</span>
-            <span class='bodySize' id='{{id}}-bodySize'>{{response.bodySize}}</span>
-            <span><span class='time' id='{{id}}-time'>{{time}}</span> msec</span>
-            <span class='timelineBar' id='{{id}}-timeline'></span>
-        </div>
-    </script>
-    <script type='text/tmpl' id='har-timings-template'>
-        <span id='{{id}}-lpad' class='timelineSlice' style='width:{{timings._lpad}}%'></span><span
-      id='{{id}}-blocked' class='timelineSlice timelineBlocked' style='width:{{timings.blocked}}%'></span><span
-      id='{{id}}-dns' class='timelineSlice timelineDns' style='width:{{timings.dns}}%'></span><span
-      id='{{id}}-connect' class='timelineSlice timelineConnect' style='width:{{timings.connect}}%'></span><span
-      id='{{id}}-send' class='timelineSlice timelineSend' style='width:{{timings.send}}%'></span><span
-      id='{{id}}-wait' class='timelineSlice timelineWait' style='width:{{timings.wait}}%'></span><span
-      id='{{id}}-receive' class='timelineSlice timelineReceive' style='width:{{timings.receive}}%'></span><span
-      id='{{id}}-rpad' class='timelineSlice' style='width:{{timings._rpad}}%'></span>
-    </script>
-    <script type='text/tmpl' id='har-details-template'>
-        <div class='details' id='{{id}}-details'>
-            <td colspan="7">
-                <div id='{{id}}-tabs'>
-                    <ul>
-                        <li><a href='#{{id}}-tab-1'>Headers</a></li>
-                        <li><a href='#{{id}}-tab-2'>Request Body</a></li>
-                        <li><a href='#{{id}}-tab-3'>Response Body</a></li>
-                    </ul>
-                    <div id='{{id}}-tab-1'>
-                        <p class='hv-header'>Request headers</p>
-                        <div id='{{id}}-req-headers'></div>
-                        <p class='hv-header'>Response headers</p>
-                        <div id='{{id}}-resp-headers'></div>
-                    </div>
-                    <div id='{{id}}-tab-2'>
-                        <pre id='{{id}}-req-body' class='hv-body'>{{request.body}}</pre>
-                    </div>
-                    <div id='{{id}}-tab-3'>
-                        <pre id='{{id}}-resp-body' class='hv-body'>{{response.body}}</pre>
-                    </div>
-                </div>
-            </td>
-        </div>
-    </script>
-    <script type='text/teml' id='har-headers-template'>
-        <table>
-            {{#headers}}
-            <tr>
-                <td>{{name}}:</td>
-                <td>{{value}}</td>
-            </tr>
-            {{/headers}}
-        </table>
-    </script>
     <script type='text/javascript'>
         $(document).ready(function () {
             var max = 10;
@@ -79,7 +23,7 @@
                 });
                 har.request(i, {
                     method: 'GET',
-                    url: 'http://urldasdash jhd ajgas jdga dahsgd hdgash dgashdg hdg hdgh dhasgdf ahsdf aghsd ghasd' + i,
+                    url: 'http://urldasdash.jhd.ajgas/jdga/dahsgd/hdgash/dgashdg/hdg/hdgh/dhasgdf/ahsdf/aghsd?ghasd' + i,
                     headers: [
                         {name: 'Connection', value: 'keep-alive'}
                     ]
@@ -128,8 +72,6 @@
 </head>
 <body>
 <div id='har'></div>
-
-<span id='frac'>frac</span>\
 
 </body>
 </html>

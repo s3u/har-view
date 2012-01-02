@@ -1,106 +1,111 @@
-.method {
+.har .method {
     text-align: left;
     text-transform: uppercase;
     max-width: 1em;
 }
 
-.url {
+.har .url {
     display: inline-block;
     overflow: hidden;
+    border-right: 1px solid grey;
     width: 20em;
     white-space: nowrap;
 }
 
-.status {
+.har .status {
     max-width: 3em;
     text-align: right;
 }
 
-.bodySize {
-    /*max-width: 5em;*/
+.har .bodySize {
     text-align: right;
-}
-
-pre {
-    white-space: pre-wrap;
-}
-
-p.title {
-    border-bottom: 2px solid #a9a9a9;
-}
-
-.bodySize {
     width: 3em;
     white-space: nowrap;
     display: inline-block;
 }
 
-div.request {
+.har pre {
+    white-space: pre-wrap;
+}
+
+.har p.title {
+    border-bottom: 2px solid #a9a9a9;
+}
+
+.har .request {
     border-bottom: 1px solid #efefef;
     font-family: Lucida Grande, Tahoma, sans-serif;
     font-size: 10pt;
 }
 
-.timelineBar {
+.har .timelineBar {
     white-space: nowrap;
-    width: 300px;
+    width: 400px;
     display: inline-block;
 }
 
-.timelineWaiting {
+.har .timelinePad {
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.har .timelineSlice {
+    box-shadow: 0 0 1px #888888;
+}
+
+.har .timelineWaiting {
     background-color: #f3f3f3;
     border: 1px solid #e3e3e3;
 }
 
-.timelineBlocked {
+.har .timelineBlocked {
     background-color: #DECCB2;
     border: 1px solid #cEbCa2;
 }
 
-.timelineDns {
+.har .timelineDns {
     background-color: #63B3C0;
     border: 1px solid #53A3B0;
 }
 
-.timelineSsl {
+.har .timelineSsl {
     background-color: #98B89B;
     border: 1px solid #88A88B;
 }
 
-.timelineConnect {
+.har .timelineConnect {
     background-color: #A7D83E;
     border: 1px solid #97C82E;
 }
 
-.timelineSend {
+.har .timelineSend {
     background-color: #D89A89;
     border: 1px solid #C88A79;
 }
 
-.timelineWait {
+.har .timelineWait {
     background-color: #9082B2;
     border: 1px solid #8072A2;
 }
 
-.timelineReceive {
+.har .timelineReceive {
     background-color: #B4B4B4;
     border: 1px solid #A4A4A4;
 }
 
-.timelineReminder {
+.har .timelineReminder {
     background-color: red;
     border: 1px solid red;
     display: block;
 }
 
-span.timelineSlice {
+.har span.timelineSlice {
     margin: 0;
     height: 11pt;
     display: inline-block;
-    /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);*/
 }
 
-span.plus {
+.har .plus {
     background-image: url(twisty-sprites.png);
     background-repeat: no-repeat;
     background-position: 3px 3px;
@@ -108,70 +113,69 @@ span.plus {
     max-width: 3em;
 }
 
-span.minus {
+.har .minus {
     background-image: url(twisty-sprites.png);
     background-repeat: no-repeat;
     background-position: 3px -16px;
     cursor: pointer;
 }
 
-.hv-header {
+.har .header {
     margin: 0;
     font-weight: bold;
     color: #565656;
 }
 
-.hv-body {
+.har .body {
     margin: 2px 0;
 }
 
-span.time {
+.har span.time {
     width: 8em;
     text-align: right;
-    /*float: right;*/
 }
 
-.ui-widget {
+.har .ui-widget {
     font-family: inherit;
     font-size: inherit;
 }
 
-.ui-tabs .ui-tabs-nav {
+.har .ui-tabs .ui-tabs-nav {
     padding: 0;
 }
 
-.ui-widget-header {
+.har .ui-widget-header {
     background: none;
 }
 
-.ui-tabs .ui-tabs-nav li {
+.har .ui-tabs .ui-tabs-nav li {
     margin: 0;
 }
 
-.ui-widget-header {
+.har .ui-widget-header {
     border: none;
     border-bottom: 1px solid #AAA;
 }
 
-.ui-tabs .ui-tabs-nav li a {
+.har .ui-tabs .ui-tabs-nav li a {
     padding: 2px;
 }
 
-.ui-tabs .ui-tabs-panel {
+.har .ui-tabs .ui-tabs-panel {
     padding-left: 4px;
 }
 
-.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+.har .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
     -moz-border-radius: 0px;
     -webkit-border-radius: 0px;
     -khtml-border-radius: 0px;
     border-radius: 0px;
 }
 
-.ui-widget-content {
+.har .ui-widget-content {
     border: 1px solid #efefef;
 }
 
-.ui-widget {
+.har .ui-widget {
     font-family: Lucida Grande, Tahoma, sans-serif;
 }

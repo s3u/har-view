@@ -13,12 +13,67 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * See https://github.com/s3u/har-view for the latest.
+ *
+ * See https://github.com/s3u/har-view/blob/master/examples/index.html for an example.
+ */
 (function ($) {
     var HarView = function (element, options) {
-        var reqTemplate = $('#har-req-template').html();
-        var detailsTemplate = $('#har-details-template').html();
-        var headersTemplate = $('#har-headers-template').html();
-        var timingsTemplate = $('#har-timings-template').html();
+        var reqTemplate = "<div id='{{id}}-req' class='request'>\
+            <span class='plus' id='{{id}}'>&nbsp;&nbsp;&nbsp;</span>\
+            <span class='method' id='{{id}}-method'>{{request.method}}</span>\
+            <span class='url' id='{{id}}-url' title='{{request.url}}'>{{request.url}}</span>\
+            <span class='status' id='{{id}}-status'>{{response.status}}</span>\
+            <span class='bodySize' id='{{id}}-bodySize'>{{response.bodySize}}</span>\
+            <span><span class='time' id='{{id}}-time'>{{time}}</span> msec</span>\
+            <span class='timelineBar' id='{{id}}-timeline'></span>\
+        </div>";
+
+        var detailsTemplate = "<div class='details' id='{{id}}-details'>\
+            <td colspan='7'>\
+                <div id='{{id}}-tabs'>\
+                    <ul>\
+                        <li><a href='#{{id}}-tab-1'>Headers</a></li>\
+                        <li><a href='#{{id}}-tab-2'>Request Body</a></li>\
+                        <li><a href='#{{id}}-tab-3'>Response Body</a></li>\
+                    </ul>\
+                    <div id='{{id}}-tab-1'>\
+                        <p class='header'>Request headers</p>\
+                        <div id='{{id}}-req-headers'></div>\
+                        <p class='header'>Response headers</p>\
+                        <div id='{{id}}-resp-headers'></div>\
+                    </div>\
+                    <div id='{{id}}-tab-2'>\
+                        <pre id='{{id}}-req-body' class='body'>{{request.body}}</pre>\
+                    </div>\
+                    <div id='{{id}}-tab-3'>\
+                        <pre id='{{id}}-resp-body' class='body'>{{response.body}}</pre>\
+                    </div>\
+                </div>\
+            </td>\
+        </div>";
+
+        var headersTemplate = "<table>\
+            {{#headers}}\
+            <tr>\
+                <td>{{name}}:</td>\
+                <td>{{value}}</td>\
+            </tr>\
+            {{/headers}}\
+        </table>";
+
+        var timingsTemplate = "<span id='{{id}}-lpad' class='timelinePad' style='width:{{timings._lpad}}%'></span><span\
+          id='{{id}}-blocked' class='timelineSlice timelineBlocked' style='width:{{timings.blocked}}%'></span><span\
+          id='{{id}}-dns' class='timelineSlice timelineDns' style='width:{{timings.dns}}%'></span><span\
+          id='{{id}}-connect' class='timelineSlice timelineConnect' style='width:{{timings.connect}}%'></span><span\
+          id='{{id}}-send' class='timelineSlice timelineSend' style='width:{{timings.send}}%'></span><span\
+          id='{{id}}-wait' class='timelineSlice timelineWait' style='width:{{timings.wait}}%'></span><span\
+          id='{{id}}-receive' class='timelineSlice timelineReceive' style='width:{{timings.receive}}%'></span><span\
+          id='{{id}}-rpad' class='timelinePad' style='width:{{timings._rpad}}%'></span>";
+
+        $(element).addClass('har');
 
         var log = {
             entries: {}
@@ -78,6 +133,8 @@
                     id: id
                 });
                 $('#' + id + '-timeline').append($(html));
+                $('#' + id + '-timeline').attr('title', JSON.stringify(data.timings));
+
                 _updateAllTimings();
 
             }
@@ -108,7 +165,7 @@
                 timings: timings
             });
 
-            $('#har').append($(html));
+            $(element).append($(html));
 
             html = Mustache.to_html(detailsTemplate, {
                 id: id,
@@ -118,7 +175,7 @@
                 timings: timings
             });
 
-            $('#har').append($(html));
+            $(element).append($(html));
 
             source = $('#' + id);
             source.click(function (event) {
@@ -138,24 +195,16 @@
             // Enable tabbed view
             $('#' + id + '-tabs').tabs();
 
-            if(data.timings) {
-                $('#' + id + '-timeline').attr('title', JSON.stringify(data.timings));
-            }
-        };
-
-        var _update = function(id) {
-            var entry = log.entries[id];
-            if(entry.request) {
-                _updateRequest(id, entry.request);
-            }
-            if(entry.response) {
-                _updateResponse(id, entry.response);
-            }
         };
 
         var _updateRequest = function(id, request) {
             _updateField('#' + id + '-method', request.method);
             _updateField('#' + id + '-url', request.url);
+            $('#' + id + '-url').resizable({handles: 'e'});
+            $('#' + id + '-url').bind('resize', function(event, ui) {
+                $('.url').width(ui.size.width);
+            });
+
             if(request.headers) {
                 _updateHeaders(id, true, request.headers);
             }
@@ -209,8 +258,6 @@
                 }
             });
         }
-
-
     };
 
     $.fn.HarView = function (options) {
