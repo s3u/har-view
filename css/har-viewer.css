@@ -1,17 +1,24 @@
 .method {
-    text-transform: uppercase
+    text-align: left;
+    text-transform: uppercase;
+    max-width: 1em;
 }
 
-.uri {
-    width: 30em;
-    margin-right: 2em;
-    white-space: nowrap;
+.url {
     display: inline-block;
     overflow: hidden;
+    width: 20em;
+    white-space: nowrap;
 }
 
-div.details {
-    display: none;
+.status {
+    max-width: 3em;
+    text-align: right;
+}
+
+.bodySize {
+    /*max-width: 5em;*/
+    text-align: right;
 }
 
 pre {
@@ -28,22 +35,23 @@ p.title {
     display: inline-block;
 }
 
-/*.timelineBar {*/
-    /*width: 300px;*/
-    /*margin: 0;*/
-    /*height: 1em;*/
-    /*display: inline-block;*/
-/*}*/
-
 div.request {
     border-bottom: 1px solid #efefef;
     font-family: Lucida Grande, Tahoma, sans-serif;
     font-size: 10pt;
 }
+
+.timelineBar {
+    white-space: nowrap;
+    width: 300px;
+    display: inline-block;
+}
+
 .timelineWaiting {
     background-color: #f3f3f3;
     border: 1px solid #e3e3e3;
 }
+
 .timelineBlocked {
     background-color: #DECCB2;
     border: 1px solid #cEbCa2;
@@ -79,6 +87,12 @@ div.request {
     border: 1px solid #A4A4A4;
 }
 
+.timelineReminder {
+    background-color: red;
+    border: 1px solid red;
+    display: block;
+}
+
 span.timelineSlice {
     margin: 0;
     height: 11pt;
@@ -91,6 +105,7 @@ span.plus {
     background-repeat: no-repeat;
     background-position: 3px 3px;
     cursor: pointer;
+    max-width: 3em;
 }
 
 span.minus {
@@ -111,10 +126,11 @@ span.minus {
 }
 
 span.time {
-    width: 3em;
+    width: 8em;
     text-align: right;
-    float: right;
+    /*float: right;*/
 }
+
 .ui-widget {
     font-family: inherit;
     font-size: inherit;
@@ -137,24 +153,25 @@ span.time {
     border-bottom: 1px solid #AAA;
 }
 
-/*.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {*/
-    /*border: none;*/
-/*}*/
-/**/
-.ui-tabs .ui-tabs-nav li a{
+.ui-tabs .ui-tabs-nav li a {
     padding: 2px;
 }
-/**/
+
 .ui-tabs .ui-tabs-panel {
     padding-left: 4px;
 }
-/**/
-/*.ui-tabs-panel {*/
-/*}*/
 
 .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
-    -moz-border-radius: 0px/*{cornerRadius}*/;
-    -webkit-border-radius: 0px/*{cornerRadius}*/;
-    -khtml-border-radius: 0px/*{cornerRadius}*/;
-    border-radius: 0px/*{cornerRadius}*/;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -khtml-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.ui-widget-content {
+    border: 1px solid #efefef;
+}
+
+.ui-widget {
+    font-family: Lucida Grande, Tahoma, sans-serif;
 }

@@ -15,67 +15,16 @@
  */
 (function ($) {
     var HarView = function (element, options) {
-        var template = "<div id='{{id}}-req' class='request'> \
-            <span class='plus' id='{{id}}'>&nbsp;&nbsp;&nbsp;&nbsp;</span>\
-            <span class='method'>{{request.method}}</span>\
-            <span class='uri' title='{{request.url}}'>{{request.url}}</span>\
-            {{response.status}}\
-            <span class='bodySize'>{{response.bodySize}}</span>\
-            <span class='time'>{{time}}</span>\
-        <span id='{{id}}-timeline'>\
-                <span class='timelineBar'><span class='timelineSlice timelineWaiting'\
-                            style='width:{{timings.waiting}}px'></span><span \
-                    class='timelineSlice timelineBlocked'\
-                        style='width:{{timings.blocked}}px'></span><span\
-                  class='timelineSlice timelineDns' style='width:{{timings.dns}}px'></span><span\
-                  class='timelineSlice timelineConnect'\
-                  style='width:{{timings.connect}}px'></span><span\
-                  class='timelineSlice timelineSend' style='width:{{timings.send}}px'></span><span\
-                  class='timelineSlice timelineWait' style='width:{{timings.wait}}px'></span><span\
-                  class='timelineSlice timelineReceive'\
-                  style='width:{{timings.receive}}px'></span></span>\
-            </span>\
-        </div>\
-        <div class='details' id='{{id}}-details'>\
-            <div id='{{id}}-tabs'>\
-                <ul>\
-                    <li><a href='#{{id}}-tab-1'>Headers</a></li>\
-                    <li><a href='#{{id}}-tab-2'>Request Body</a></li>\
-                    <li><a href='#{{id}}-tab-3'>Response Body</a></li>\
-                </ul>\
-                <div id='{{id}}-tab-1'>\
-                    <p class='hv-header'>Request headers</p>\
-                    <table>\
-                        {{#request.headers}}\
-                        <tr>\
-                            <td>{{name}}:</td>\
-                            <td>{{value}}</td>\
-                        </tr>\
-                        {{/request.headers}}\
-                    </table>\
-                    <p class='hv-header'>Response headers</p>\
-                    <table>\
-                        {{#response.headers}}\
-                        <tr>\
-                            <td>{{name}}:</td>\
-                            <td>{{value}}</td>\
-                        </tr>\
-                        {{/response.headers}}\
-                    </table>\
-                </div>\
-                <div id='{{id}}-tab-2'>\
-                    <pre class='hv-body'>{{request.body}}</pre>\
-                </div>\
-                <div id='{{id}}-tab-3'>\
-                    <pre class='hv-body'>{{response.body}}</pre>\
-                </div>\
-            </div>\
-        </div>";
+        var reqTemplate = $('#har-req-template').html();
+        var detailsTemplate = $('#har-details-template').html();
+        var headersTemplate = $('#har-headers-template').html();
+        var timingsTemplate = $('#har-timings-template').html();
 
         var log = {
             entries: {}
         };
         var totals = {};
+        var pads = {};
         var left, right;
 
         this.entry = function (id, entry) {
@@ -88,18 +37,21 @@
             else {
                 left = right = t;
             }
+
+            _render(id);
         }
         this.request = function (id, request) {
             if(log.entries[id]) {
                 log.entries[id].request = request;
+                _updateRequest(id, request);
             }
             else {
                 log.entries[id] = {
                     id: id,
                     request: request
                 };
+                _render(id);
             }
-            _renderAll();
         };
 
         // left: min(startedDateTime)
@@ -111,6 +63,8 @@
                     total += value;
                 }
             });
+            _updateField('#' + id + '-time', total);
+
             var data = log.entries[id];
             if(data) {
                 data.timings = timings;
@@ -119,45 +73,34 @@
                 t = t + total;
                 right = (right > t) ? right : t;
 
-                console.log(left + ' ' + right + ' -- ' + (right - left));
+                var html = Mustache.to_html(timingsTemplate, {
+                    timings: timings,
+                    id: id
+                });
+                $('#' + id + '-timeline').append($(html));
+                _updateAllTimings();
+
             }
             else {
                 // Error otherwise
             }
 
-            totals[id] = total;
-            _renderAll();
-
-            $('#left').html(right - left);
         };
 
         this.response = function (id, response) {
             if(log.entries[id]) {
                 log.entries[id].response = response;
+                _updateResponse(id, response);
             }
             else {
                 // Error otherwise
             }
-            _renderAll();
         }
 
-        var _renderAll = function() {
-            $.each(log.entries, function(id, value) {
-                _render(id);
-            })
-        };
-
         var _render = function (id) {
-            var frac = 400 / (right - left);
-
             var html, source, dest;
             var data = log.entries[id], timings = {};
-            if(data.timings) {
-                $.each(data.timings, function (key, value) {
-                    timings[key] = frac * value;
-                });
-            }
-            html = Mustache.to_html(template, {
+            html = Mustache.to_html(reqTemplate, {
                 id: id,
                 time: totals[id],
                 request: data.request,
@@ -165,13 +108,17 @@
                 timings: timings
             });
 
-            if($('#' + id + '-req').html()) {
-                $('#' + id + '-details').remove();
-                $('#' + id + '-req').replaceWith(html);
-            }
-            else {
-                $('#har').append(html);
-            }
+            $('#har').append($(html));
+
+            html = Mustache.to_html(detailsTemplate, {
+                id: id,
+                time: totals[id],
+                request: data.request,
+                response: data.response,
+                timings: timings
+            });
+
+            $('#har').append($(html));
 
             source = $('#' + id);
             source.click(function (event) {
@@ -183,18 +130,87 @@
                 else {
                     $('#' + event.target.id).removeClass('minus');
                     $('#' + event.target.id).addClass('plus');
-                    dest = $('#' + event.target.id + '-details').hide();
+                    $('#' + event.target.id + '-details').hide();
                 }
             });
+            $('#' + id + '-details').hide();
 
             // Enable tabbed view
             $('#' + id + '-tabs').tabs();
 
-            $('#' + id + '-timeline').attr('title', JSON.stringify(data.timings));
-
-            $().tooltip();
-
+            if(data.timings) {
+                $('#' + id + '-timeline').attr('title', JSON.stringify(data.timings));
+            }
         };
+
+        var _update = function(id) {
+            var entry = log.entries[id];
+            if(entry.request) {
+                _updateRequest(id, entry.request);
+            }
+            if(entry.response) {
+                _updateResponse(id, entry.response);
+            }
+        };
+
+        var _updateRequest = function(id, request) {
+            _updateField('#' + id + '-method', request.method);
+            _updateField('#' + id + '-url', request.url);
+            if(request.headers) {
+                _updateHeaders(id, true, request.headers);
+            }
+            _updateField('#' + id + '-req-body', request.body);
+        };
+
+        var _updateResponse = function(id, response) {
+            _updateField('#' + id + '-status', response.status);
+
+            if(response.headers) {
+                _updateHeaders(id, false, response.headers);
+            }
+            if(response.body) {
+                _updateField('#' + id + '-resp-body', response.body);
+                _updateField('#' + id + '-bodySize', response.body.length);
+            }
+        }
+
+        var _updateField = function(id, field) {
+            if(field) {
+                $(id).text(field);
+            }
+        }
+
+        var _updateHeaders = function(id, isRequest, headers) {
+            var html = Mustache.to_html(headersTemplate, {
+                headers: headers
+            });
+
+            $('#' + id + (isRequest ? '-req-headers' : '-resp-headers')).append($(html));
+        }
+
+        var _updateAllTimings = function() {
+            $.each(log.entries, function(id, data) {
+                if(data.timings) {
+                    var total = 0;
+                    $.each(data.timings, function (key, value) {
+                        total += value;
+                    });
+
+                    var t = new Date(data.startedDateTime).getTime();
+                    pads[id] = [t - left, right - t - total];
+                    totals[id] = total + pads[id][0] + pads[id][1];
+
+                    var frac = 100 / totals[id];
+                    $.each(data.timings, function (key, value) {
+                        $('#' + id + '-' + key).width(value * frac + '%');
+                    });
+                    $('#' + id + '-lpad').width(pads[id][0] * frac + '%');
+                    $('#' + id + '-rpad').width(pads[id][1] * frac + '%');
+                }
+            });
+        }
+
+
     };
 
     $.fn.HarView = function (options) {
