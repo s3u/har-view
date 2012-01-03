@@ -18,7 +18,7 @@ the browser window.
 
 ## Prerquisites
 
-To use this widget in a page, include the following scripts and stylesheets.
+Include the following to use this widget in a page.
 
     <script type='text/javascript' src='scripts/mustache.js'></script>
     <script type='text/javascript' src='scripts/jquery.min.js'></script>
