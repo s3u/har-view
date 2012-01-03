@@ -20,6 +20,10 @@
 
 <script type='text/javascript'>
 
+    if(typeof FileReader !== "undefined") {
+        alert('Oops - your browser does not support FileReader. Use latest Chrome or Firefox');
+    }
+
     var target = window; //document.getElementById('dropbox');
     target.ondragover = function () {
         return false;
