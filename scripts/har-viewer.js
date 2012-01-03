@@ -27,7 +27,7 @@
             <span class='url' id='{{id}}-url' title='{{request.url}}'>{{request.url}}</span>\
             <span class='status' id='{{id}}-status'>{{response.status}}</span>\
             <span class='bodySize' id='{{id}}-bodySize'></span>\
-            <span><span class='time' id='{{id}}-time'>{{time}}</span> msec</span>\
+            <span><span class='time' id='{{id}}-time'>0</span> msec</span>\
             <span class='timelineBar' id='{{id}}-timeline'></span>\
         </div>";
 
