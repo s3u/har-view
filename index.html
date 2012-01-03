@@ -14,25 +14,20 @@
 
 <h1>HAR View Demo</h1>
 
-<p>Drop har file in this window.</p>
+<p>Drop har file in this window. Use latest Chrome or Firefox.</p>
 
 <div id='har-view'></div>
 
 <script type='text/javascript'>
 
-    if(typeof FileReader !== "undefined") {
-        alert('Oops - your browser does not support FileReader. Use latest Chrome or Firefox');
-    }
-
-    var target = window; //document.getElementById('dropbox');
-    target.ondragover = function () {
+    window.ondragover = function () {
         return false;
     };
-    target.ondragend = function () {
+    window.ondragend = function () {
         return false;
     };
 
-    target.ondrop = function (e) {
+    window.ondrop = function (e) {
         e.stopPropagation();
         e.preventDefault();
 
