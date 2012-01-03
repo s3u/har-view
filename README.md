@@ -12,6 +12,8 @@ This version also uses Steve Souder's
 
 ## Try Online
 
+![Example](/path/to/img.jpg)
+
 You can try this viewer online. Open
 [http://s3u.github.com/har-view/](http://s3u.github.com/har-view/), and drop a HAR file anywhere in
 the browser window.
