@@ -179,3 +179,8 @@
 .har .ui-widget {
     font-family: Lucida Grande, Tahoma, sans-serif;
 }
+
+.har .summary {
+    padding-top: 8px;
+    font-weight: bold;
+}
