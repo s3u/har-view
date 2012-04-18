@@ -2,7 +2,7 @@
     text-align: left;
     text-transform: uppercase;
     min-width: 1em;
-    width: 4em;
+    width: 3em;
     display: inline-block;
 }
 
@@ -21,7 +21,7 @@
     width: 3em;
 }
 
-.har .status {
+.har .statusText {
     max-width: 3em;
     text-align: right;
     display: inline-block;
