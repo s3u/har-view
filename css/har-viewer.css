@@ -1,7 +1,9 @@
 .har .method {
     text-align: left;
     text-transform: uppercase;
-    max-width: 1em;
+    min-width: 1em;
+    width: 4em;
+    display: inline-block;
 }
 
 .har .url {
@@ -15,6 +17,15 @@
 .har .status {
     max-width: 3em;
     text-align: right;
+    display: inline-block;
+    width: 3em;
+}
+
+.har .status {
+    max-width: 3em;
+    text-align: right;
+    display: inline-block;
+    width: 7em;
 }
 
 .har .bodySize {

@@ -293,7 +293,7 @@
             }
             if(response.content && response.content.text) {
                 _updateField('#' + id + '-resp-body', response.content.text);
-                _updateField('#' + id + '-bodySize', response.bodySize);
+                _updateField('#' + id + '-bodySize', response.bodySize + ' bytes');
             }
             else {
                 $('#' + id + '-tabs').tabs('disable', 3);
