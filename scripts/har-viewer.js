@@ -26,9 +26,16 @@
             <span class='method' id='{{id}}-method'>{{request.method}}</span>\
             <span class='url' id='{{id}}-url' title='{{request.url}}'>{{request.url}}</span>\
             <span class='status' id='{{id}}-status'>{{response.status}}</span>\
+            <span class='statusText' id='{{id}}-statusText'>{{response.statusText}}</span>\
             <span class='bodySize' id='{{id}}-bodySize'></span>\
             <span><span class='time' id='{{id}}-time'>0</span> msec</span>\
             <span class='timelineBar' id='{{id}}-timeline'></span>\
+        </div>";
+        var summaryTemplate = "<div id='summary' class='summary'>\
+            <span class='reqCount' id='reqCount'></span>\
+            <span class='reqSize' id='totalReqSize'></span>\
+            <span class='respSize' id='totalRespSize'></span>\
+            <span class='time' id='totalTime'></span>\
         </div>";
 
         var detailsTemplate = "<div class='details' id='{{id}}-details'>\
@@ -78,6 +85,7 @@
           id='{{id}}-rpad' class='timelinePad' style='width:{{timings._rpad}}%'></span>";
 
         $(element).addClass('har');
+        $(element).append($(summaryTemplate));
 
         var log = {
             entries: {}
@@ -86,6 +94,10 @@
         var pads = {};
         var left, right;
         var idctr = 0;
+        var reqCount = 0;
+        var totalReqSize = 0;
+        var totalRespSize = 0;
+        var totalTime = 0;
 
         this.render = function(har) {
             var that = this;
@@ -135,6 +147,16 @@
                 };
             }
             _updateRequest(id, request);
+
+            reqCount = reqCount + 1;
+            _updateField('#reqCount', reqCount + ((reqCount == 1) ?  ' request,' : ' requests,'));
+            if(request.headersSize && request.headersSize > 0) {
+                totalReqSize = totalReqSize + request.headersSize;
+            }
+            if(request.bodySize && request.bodySize > 0) {
+                totalReqSize = totalReqSize + request.bodySize;
+            }
+            _updateField('#totalReqSize', 'Total request ' + totalReqSize + ' bytes,');
         };
 
         // left: min(startedDateTime)
@@ -147,6 +169,8 @@
                 }
             });
             _updateField('#' + id + '-time', total > -1 ? total : 0);
+            totalTime = totalTime + total;
+            _updateField('#totalTime', totalTime + ' msec');
 
             var data = log.entries[id];
             if(data) {
@@ -176,6 +200,14 @@
             if(log.entries[id]) {
                 log.entries[id].response = response;
                 _updateResponse(id, response);
+
+                if(response.headersSize && response.headersSize > 0) {
+                    totalRespSize = totalRespSize + response.headersSize;
+                }
+                if(response.bodySize && response.bodySize > 0) {
+                    totalRespSize = totalRespSize + response.bodySize;
+                }
+                _updateField('#totalRespSize', 'Total response ' + totalRespSize + ' bytes');
             }
             else {
                 // Error otherwise
@@ -193,7 +225,7 @@
                 timings: timings
             });
 
-            $(element).append($(html));
+            $(html).insertBefore($('#summary'));
 
             html = Mustache.to_html(detailsTemplate, {
                 id: id,
@@ -203,7 +235,7 @@
                 timings: timings
             });
 
-            $(element).append($(html));
+            $(html).insertBefore($('#summary'));
 
             source = $('#' + id);
             source.click(function (event) {
@@ -252,13 +284,16 @@
 
         var _updateResponse = function (id, response) {
             _updateField('#' + id + '-status', response.status);
+            if(response.statusText) {
+                _updateField('#' + id + '-statusText', response.statusText);
+            }
 
             if(response.headers) {
                 _updateHeaders(id, false, response.headers);
             }
             if(response.content && response.content.text) {
                 _updateField('#' + id + '-resp-body', response.content.text);
-                _updateField('#' + id + '-bodySize', response.content.text.length);
+                _updateField('#' + id + '-bodySize', response.bodySize);
             }
             else {
                 $('#' + id + '-tabs').tabs('disable', 3);
@@ -333,6 +368,3 @@
         });
     };
 })(jQuery);
-
-
-
