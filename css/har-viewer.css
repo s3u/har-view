@@ -1,3 +1,7 @@
+.har {
+    font-family: Lucida Grande, Tahoma, sans-serif;
+}
+
 .har .method {
     text-align: left;
     text-transform: uppercase;
@@ -15,24 +19,15 @@
 }
 
 .har .status {
-    max-width: 3em;
-    text-align: right;
+    text-align: left;
     display: inline-block;
-    width: 3em;
-}
-
-.har .statusText {
-    max-width: 3em;
-    text-align: right;
-    display: inline-block;
-    width: 7em;
+    width: 5em;
 }
 
 .har .bodySize {
-    text-align: right;
-    width: 3em;
-    white-space: nowrap;
+    text-align: left;
     display: inline-block;
+    width: 7em;
 }
 
 .har pre {
@@ -193,5 +188,4 @@
 
 .har .summary {
     padding-top: 8px;
-    font-weight: bold;
 }

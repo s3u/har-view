@@ -26,7 +26,6 @@
             <span class='method' id='{{id}}-method'>{{request.method}}</span>\
             <span class='url' id='{{id}}-url' title='{{request.url}}'>{{request.url}}</span>\
             <span class='status' id='{{id}}-status'>{{response.status}}</span>\
-            <span class='statusText' id='{{id}}-statusText'>{{response.statusText}}</span>\
             <span class='bodySize' id='{{id}}-bodySize'></span>\
             <span><span class='time' id='{{id}}-time'>0</span> msec</span>\
             <span class='timelineBar' id='{{id}}-timeline'></span>\
@@ -283,9 +282,11 @@
         };
 
         var _updateResponse = function (id, response) {
-            _updateField('#' + id + '-status', response.status);
             if(response.statusText) {
-                _updateField('#' + id + '-statusText', response.statusText);
+                _updateField('#' + id + '-status', Humanize.truncatechars(response.status + ' ' + response.statusText, 10));
+            }
+            else {
+                _updateField('#' + id + '-status', response.status);
             }
 
             if(response.headers) {
@@ -293,9 +294,10 @@
             }
             if(response.content && response.content.text) {
                 _updateField('#' + id + '-resp-body', response.content.text);
-                _updateField('#' + id + '-bodySize', response.bodySize + ' bytes');
+                _updateField('#' + id + '-bodySize', Humanize.filesizeformat(response.bodySize));
             }
             else {
+                _updateField('#' + id + '-bodySize', Humanize.filesizeformat(0));
                 $('#' + id + '-tabs').tabs('disable', 3);
             }
         }
