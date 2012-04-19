@@ -83,9 +83,6 @@
           id='{{id}}-receive' class='timelineSlice timelineReceive' style='width:{{timings.receive}}%'></span><span\
           id='{{id}}-rpad' class='timelinePad' style='width:{{timings._rpad}}%'></span>";
 
-        $(element).addClass('har');
-        $(element).append($(summaryTemplate));
-
         var log = {
             entries: {}
         };
@@ -99,6 +96,21 @@
         var totalTime = 0;
 
         this.render = function(har) {
+            $(element).addClass('har');
+            $(element).append($(summaryTemplate));
+
+            totals = {};
+            log = {
+                entries: {}
+            };
+            pads = {};
+            left = right = 0;
+            idctr = 0;
+            reqCount = 0;
+            totalReqSize = 0;
+            totalRespSize = 0;
+            totalTime = 0;
+
             var that = this;
             var pageref;
             $.each(har.log.entries, function (index, entry) {

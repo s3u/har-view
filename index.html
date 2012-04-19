@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<h1>HAR View Demo</h1>
+<h1>HAR View</h1>
 
 <p>Drop har file in this window. Use latest Chrome or Firefox.</p>
 
@@ -36,6 +36,8 @@
     window.ondrop = function (e) {
         e.stopPropagation();
         e.preventDefault();
+
+        $('#har-view').empty();
 
         var file = e.dataTransfer.files[0];
         var reader = new FileReader();
